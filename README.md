@@ -71,6 +71,13 @@ sudo apt install cmake g++ build-essential libyaml-cpp-dev libeigen3-dev libboos
 
 sudo apt install ros-noetic-teleop-twist-keyboard ros-noetic-controller-interface ros-noetic-gazebo-ros-control ros-noetic-joint-state-controller ros-noetic-effort-controllers ros-noetic-joint-trajectory-controller ros-noetic-joy ros-noetic-ros-control ros-noetic-ros-controllers ros-noetic-controller-manager
 ```
+### 安装git lfs
+由于本仓库中有些文件是通过`git lfs`传输的，所以一定要安装`git lfs`
+```
+sudo apt install git-lfs
+git lfs install
+```
+
 ---
 
 ## 🛠 安装步骤
@@ -109,9 +116,11 @@ cd ~/3d-nav/src/pct_planner/PCT_planner-main/planner
 
 ```
 cd ~/3d-nav 
-catkin_make source 
-devel/setup.bash
+./build.sh
+source devel/setup.bash
 ```
+⚠️这一步可能会出现报错，unitree SDK的一个依赖可能会下载不下来，会提示缺失一个log文件夹，需要去[unitree SDK2](https://github.com/unitreerobotics/unitree_sdk2)将源代码下载下来后将`include/unitree/common/log`文件夹复制到报错缺失的地方。
+
 ---
 ## ▶️ 使用说明
 

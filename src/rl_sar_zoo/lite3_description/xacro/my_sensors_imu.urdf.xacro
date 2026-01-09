@@ -1,0 +1,59 @@
+<robot name="my_imu" xmlns:xacro="http://wiki.ros.org/xacro">
+    <!-- 1. IMU 物理属性定义 -->
+    <xacro:property name="imu_length" value="0.03" />
+    <xacro:property name="imu_radius" value="0.02" />
+    <xacro:property name="imu_x" value="0.0" />
+    <xacro:property name="imu_y" value="0.0" />
+    <!-- 注意：原 z 坐标计算重复（imu_length/2 + imu_length/2 = imu_length），按需调整（比如想装在支架上，需改支架高度） -->
+    <xacro:property name="imu_z" value="${imu_length}" /> 
+    <xacro:property name="imu_m" value="0.001" />
+
+    <!-- 2. IMU 连杆（link）和关节（joint） -->
+    <link name="imu"> <!-- 连杆名：imu → 帧名也是 imu -->
+        <visual>
+            <geometry>
+                <cylinder radius="${imu_radius}" length="${imu_length}" />
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <material name="black" />
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${imu_radius}" length="${imu_length}" />
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+        </collision>
+        <xacro:cylinder_inertial_matrix m="${imu_m}" r="${imu_radius}" h="${imu_length}" />
+    </link>
+
+    <!-- 关节：imu → support（确保 parent link "support" 存在！） -->
+    <joint name="imu2laser" type="fixed">
+        <parent link="support" />
+        <child link="imu" />
+        <origin xyz="${imu_x} ${imu_y} ${imu_z}" />
+    </joint>
+
+    <!-- 3. Gazebo 可视化 + IMU 传感器插件（合并为一个 gazebo 标签，避免冲突） -->
+    <gazebo reference="imu">
+        <!-- 可视化材质 -->
+        <material>Gazebo/Black</material>
+        <!-- 启用重力（默认true，可省略） -->
+        <gravity>true</gravity>
+        <!-- IMU 传感器配置 -->
+        <sensor name="imu_sensor" type="imu">
+            <always_on>true</always_on>
+            <update_rate>100</update_rate>
+            <visualize>true</visualize>
+            <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+                <topicName>/imu/data</topicName> <!-- 话题名 -->
+                <bodyName>imu</bodyName> <!-- 对应 link 名，必须一致 -->
+                <updateRateHZ>100.0</updateRateHZ>
+                <gaussianNoise>0.0</gaussianNoise>
+                <xyzOffset>0 0 0</xyzOffset>
+                <rpyOffset>0 0 0</rpyOffset>
+                <frameName>imu</frameName> <!-- 帧名 = link 名，修复原错误（imu_link→imu） -->
+            </plugin>
+            <pose>0 0 0 0 0 0</pose>
+        </sensor>
+    </gazebo>
+</robot>

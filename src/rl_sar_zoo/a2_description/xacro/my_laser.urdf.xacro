@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<robot name="my_laser" xmlns:xacro="http://wiki.ros.org/xacro">
+
+    <xacro:property name="support_length" value="0.075" /> 
+    <xacro:property name="support_radius" value="0.01" /> 
+    <xacro:property name="support_x" value="0.0" /> 
+    <xacro:property name="support_y" value="0.0" /> 
+    <xacro:property name="support_z" value="${0.12 / 2 + support_length / 2}" /> 
+    <xacro:property name="support_m" value="0.002" /> 
+    <xacro:property name="M_PI" value="3.14159"/>
+    <link name="support">
+        <visual>
+            <geometry>
+                <cylinder radius="${support_radius}" length="${support_length}" />
+            </geometry>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+            <material name="red">
+                <color rgba="0.8 0.2 0.0 0.8" />
+            </material>
+        </visual>
+
+        <collision>
+            <geometry>
+                <cylinder radius="${support_radius}" length="${support_length}" />
+            </geometry>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+        </collision>
+
+        <xacro:cylinder_inertial_matrix m="${support_m}" r="${support_radius}" h="${support_length}" />
+
+    </link>
+
+    <joint name="support2base_link" type="fixed">
+        <parent link="trunk" />
+        <child link="support" />
+        <origin xyz="${support_x} ${support_y} ${support_z}" />
+    </joint>
+
+    <gazebo reference="support">
+        <material>Gazebo/White</material>
+    </gazebo>
+    
+    <xacro:include filename="$(find a2_description)/xacro/my_sensors_imu.urdf.xacro" />
+    <xacro:include filename="$(find a2_description)/xacro/VLP-16.urdf.xacro" />
+    <xacro:VLP-16 parent="support" name="velodyne" topic="/velodyne_points" hz="10" samples="440" gpu="${gpu}">
+        <origin xyz="0 0 0.075" rpy="0 0 0"/>
+    </xacro:VLP-16>
+    
+</robot>

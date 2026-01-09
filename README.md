@@ -16,7 +16,8 @@
 > 本项目并 **没有将 DWA 拓展为完整 3D 规划器**，而是由于DWA局部规划器会对全局路径进行时序跟踪故在此也可以用于3d导航。
 
 以下是改造后的move_base框架
-<img src="src/images/20260108-144248.jpg" width="500" >
+
+<img src="src/images/20260108-144248.jpg" width="500"/>
 
 ## 控制模块
 控制模块使用了[rl_sar](https://github.com/fan-ziqi/rl_sar?tab=readme-ov-file)的工作，该项目实现了gazebo环境下的强化学习策略的sim-to-sim，用其作为四足机器人控制器提供跨楼层的运动能力，Lite3使用的是自己训练的策略，效果不是很好，故下文和演示都是使用自带的Unitree a1进行的。

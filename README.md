@@ -160,3 +160,11 @@ python3 plan.py --scene Second
 ```
 roslaunch rl_sar nav.launch
 ```
+
+## todo list
+目前该框架还有比较多的问题，导航规划部分和运动能力上都有比较多可以优化的空间，日后的计划
+
+1. 加入FAST_LIO重定位
+2. 使用适配四足机器人版本的ego-planner作为局部规划器，放弃movebase框架
+3. 优化pct-planner解决有时路径寻找不到的问题
+4. 使用legged_perceptive提升机器人在复杂地形的运动能力

@@ -100,7 +100,7 @@ git clone https://github.com/enffft/3d-nav.git
 ### 3️⃣ 安装 PCT-Planner
 
 ```
-cd /home/yifeiy/rl_sar/src/pct_planner/PCT_planner-main/planner
+cd ~/3d-nav/src/pct_planner/PCT_planner-main/planner
 ./build_thirdparty.sh
 ./build.sh
 ```

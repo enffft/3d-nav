@@ -1,0 +1,28 @@
+<launch>
+  <!-- 设置 GTSAM 动态库路径 -->
+  <!-- <env name="LD_LIBRARY_PATH" value="$(env LD_LIBRARY_PATH):src/pct_planner/PCT_planner-main/planner/lib/3rdparty/gtsam-4.1.1/install/lib"/> -->
+
+  <!-- 启动 PCT 路径规划节点 -->
+
+  <!-- 启动 move_base -->
+  <node pkg="move_base" type="move_base" name="move_base" output="screen" clear_params="true" >
+    <!-- 加载 costmap 参数 -->
+    <rosparam file="$(find rl_sar)/3Dnav_param/costmap_common_params.yaml" command="load" ns="global_costmap"/>
+    <rosparam file="$(find rl_sar)/3Dnav_param/costmap_common_params.yaml" command="load" ns="local_costmap"/>
+    <rosparam file="$(find rl_sar)/3Dnav_param/global_costmap_params.yaml" command="load" ns="global_costmap"/>
+    <rosparam file="$(find rl_sar)/3Dnav_param/local_costmap_params.yaml" command="load" ns="local_costmap"/>
+    
+    <!-- 加载 teb 参数 -->
+    <rosparam file="$(find rl_sar)/3Dnav_param/teb_local_planner_params.yaml" command="load"/>
+    <!-- <rosparam file="$(find rl_sar)/3Dnav_param/dwa_planner_params.yaml" command="load"/> -->
+    <!-- 加载 move_base 核心参数 -->
+    <rosparam file="$(find rl_sar)/3Dnav_param/move_base_params.yaml" command="load"/>
+    <!-- 规划器配置 -->
+    <param name="base_global_planner" value="pct_planner/PctPathPlanner"/>
+    <!-- <param name="base_local_planner"  value="wpbh_local_planner/WpbhLocalPlanner"/> -->
+    <!-- <param name="base_local_planner"  value="dwa_local_planner/DWAPlannerROS"/> -->
+    <param name="base_local_planner"  value="teb_local_planner/TebLocalPlannerROS"/>
+    <!-- 话题映射 -->
+    <remap from="odom" to="/LIO/odom_vehicle"/>
+  </node>
+</launch>

@@ -1,0 +1,38 @@
+<launch>
+    <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan" output="screen">
+        <!-- 映射输入点云话题（你的原始雷达点云） -->
+        <!-- <remap from="cloud_in" to="/LIO/clouds_lidar"/> -->
+        <remap from="cloud_in" to="/cloud_registered" /> 
+        <!-- 映射输出激光扫描话题（匹配costmap配置的/scan） -->
+        <remap from="scan" to="/scan"/>
+
+        <rosparam>
+            <!-- 核心：指定输出激光帧ID（匹配costmap配置的velodyne，必须和TF树一致） -->
+            target_frame: velodyne
+            <!-- TF变换容忍度（适配四足里程计抖动） -->
+            transform_tolerance: 0.5
+
+            <!-- 高度过滤：放宽范围，适配四足升高后的扫描 -->
+            min_height: 0.75 #
+            max_height: 7.0   # 
+
+            <!-- 角度范围：保留360度扫描（四足需要全向感知） -->
+            angle_min: -3.14159
+            angle_max: 3.14159
+            angle_increment: 0.0087  # 0
+
+            <!-- 扫描频率：修正为10Hz（四足导航的常规频率） -->
+            scan_time: 0.1
+            <!-- 测距范围：适配雷达实际性能（过滤近距噪声） -->
+            range_min: 0.1    # 
+            range_max: 4.0   # 
+
+            <!-- 无效值处理：合理设置inf阈值 -->
+            use_inf: true
+            inf_epsilon: 0.1  #
+
+            <!-- 并发数：适配单雷达场景 -->
+            concurrency_level: 1
+        </rosparam>
+    </node>
+</launch>

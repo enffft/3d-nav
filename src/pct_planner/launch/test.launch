@@ -1,0 +1,11 @@
+<launch>
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find pct_planner)/PCT_planner-main/rsc/rviz/pct_ros.rviz" ns="pct_planner" />
+    <node pkg="pct_planner" type="tomography.py" name="tomography" output="screen">
+        <param name="scene" value="Second" />
+        <env name="LD_LIBRARY_PATH" value="$(find pct_planner)/PCT_planner-main/planner/lib/3rdparty/gtsam-4.1.1/install/lib:$(find pct_planner)/PCT_planner-main/planner/lib:$(env LD_LIBRARY_PATH)" />
+        <env name="PYTHONPATH" value="
+        $(find pct_planner)/PCT_planner-main/planner/lib:
+        $(find pct_planner)/PCT_planner-main/tomography: 
+        $(env PYTHONPATH)" />
+    </node>
+</launch>

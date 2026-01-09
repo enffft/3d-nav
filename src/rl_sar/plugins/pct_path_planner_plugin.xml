@@ -1,0 +1,9 @@
+<library path="lib/libpct_path_planner">
+  <class name="pct_planner/PctPathPlanner"
+         type="pct_planner::PctPathPlanner"
+         base_class_type="nav_core::BaseGlobalPlanner">
+    <description>
+      A dummy global planner that directly forwards /pct_path to move_base.
+    </description>
+  </class>
+</library>

@@ -1,0 +1,36 @@
+global_frame: map
+robot_base_frame: base_footprint
+update_frequency: 10.0
+publish_frequency: 3.0
+transform_tolerance: 0.25
+
+# 局部地图滚动窗口
+static_map: false
+rolling_window: true
+width: 6.0
+height: 9.0
+resolution: 0.1
+
+plugins:
+  - {name: obstacle_layer,   type: "costmap_2d::ObstacleLayer"}
+  - {name: inflation_layer,  type: "costmap_2d::InflationLayer"}
+
+obstacle_layer:
+  enabled: true
+  observation_sources: scan
+  scan:
+    sensor_frame: velodyne
+    data_type: LaserScan
+    topic: /scan
+    marking: true
+    clearing: true
+    min_obstacle_height: 1.0
+    max_obstacle_height: 10.0
+  max_obstacle_height: 10.0
+  obstacle_range: 3.0
+  raytrace_range: 3.5
+
+inflation_layer:
+  enabled: true
+  inflation_radius: 0.3
+  cost_scaling_factor: 3.0

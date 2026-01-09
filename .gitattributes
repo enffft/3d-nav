@@ -1,0 +1,14 @@
+*.sh eol=lf
+*.pt filter=lfs diff=lfs merge=lfs -text
+*.pcd filter=lfs diff=lfs merge=lfs -text
+*.onnx filter=lfs diff=lfs merge=lfs -text
+*.dae filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
+*.gif filter=lfs diff=lfs merge=lfs -text
+*.stl filter=lfs diff=lfs merge=lfs -text
+*.graph filter=lfs diff=lfs merge=lfs -text
+src/pct_planner/PCT_planner-main/planner/lib/3rdparty/gtsam-4.1.1/gtsam/3rdparty/Eigen/Eigen/src/misc/lapacke.h filter=lfs diff=lfs merge=lfs -text
+src/pct_planner/PCT_planner-main/planner/lib/3rdparty/gtsam-4.1.1/doc/gtsam.pdf filter=lfs diff=lfs merge=lfs -text
+src/pct_planner/PCT_planner-main/planner/lib/3rdparty/gtsam-4.1.1/doc/stats.html filter=lfs diff=lfs merge=lfs -text
+policy/g1/whole_body_tracking/gangnam_style/G1_gangnam_style_V01.bvh_60hz.csv filter=lfs diff=lfs merge=lfs -text
+src/pct_planner/PCT_planner-main/planner/lib/3rdparty/gtsam-4.1.1/examples/Data/Plaza1_.mat filter=lfs diff=lfs merge=lfs -text

@@ -24,6 +24,7 @@
         <arg name="use_sim_time" value="$(arg use_sim_time)"/>
         <arg name="headless" value="$(arg headless)"/>
     </include>
+    
 
     <arg name="gpu" default="false"/>
     <node pkg="tf2_ros" type="static_transform_publisher"
@@ -61,10 +62,12 @@
         <remap from="/joint_states" to="/$(arg rname)_gazebo/joint_states"/>
     </node>
 
-    <!-- <include file="$(find pct_planner)/launch/test.launch">
-	</include> -->
-    <!-- <include file="$(find fast_lio)/launch/mapping_velodyne.launch" /> -->
-    <!-- Load joy node -->
-    <node pkg="joy" type="joy_node" name="joy_node" output="screen"/>
+    
+
+    <!-- 提前启动3d点云转2d雷达扫描节点 -->
+    <include file="$(find rl_sar)/launch/pointcloud2scan.launch" />
+
+    <!-- 加载rviz -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find rl_sar)/config/3D_nav.rviz" />
 
 </launch>
